@@ -8,7 +8,6 @@ import {
   LeafIcon,
   PriceTagIcon,
   RollIcon,
-  SushiLogoIcon,
   TablaIcon,
 } from '@/public/assets/icons';
 import { MenuItem } from '@/types';
