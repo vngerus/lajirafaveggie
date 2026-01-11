@@ -1,9 +1,9 @@
-import Footer from '@/components/sections/Footer';
+import LandingPage from '@/components/sections/LandingPage';
 
 export default function Home() {
   return (
     <div>
-      <Footer />
+      <LandingPage />
     </div>
   );
 }
