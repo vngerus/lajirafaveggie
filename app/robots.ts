@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/',
     },
-    sitemap: 'https://lajirafaveggie.cl/sitemap.xml',
+    sitemap: 'https://lajirafaveggie.vercel.app/sitemap.xml',
   };
 }

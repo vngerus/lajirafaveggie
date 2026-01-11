@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://lajirafaveggie.cl';
+  const baseUrl = 'https://lajirafaveggie.vercel.app';
 
   return [
     {
