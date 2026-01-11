@@ -14,6 +14,7 @@ import {
 import { MenuItem } from '@/types';
 import { gsap } from '@/lib/gsap';
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 
 export default function SushiMenu() {
   const [activeTab, setActiveTab] = useState(SUSHI_MENU[0].id);
@@ -67,7 +68,14 @@ export default function SushiMenu() {
       <div className="max-w-6xl mx-auto">
         <header ref={headerRef} className="text-center mb-12">
           <div className="w-20 h-20 bg-jirafa-red rounded-full mx-auto flex items-center justify-center mb-4 shadow-xl ring-4 ring-red-50">
-            <SushiLogoIcon className="w-12 h-12 fill-white" />
+            <Image
+              src={'/assets/logo-sushi.webp'}
+              alt=""
+              width={80}
+              height={80}
+              priority
+              className="drop-shadow-2xl"
+            />
           </div>
           <h2 className="text-5xl font-marker text-black mb-2 transform -rotate-2">
             LA JIRAFA <span className="text-jirafa-red">SUSHI</span>
