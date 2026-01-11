@@ -3,6 +3,7 @@
 import { CONTACT_INFO } from '@/data/menu';
 import { ViewState } from '@/types';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Navbar({
@@ -39,45 +40,34 @@ export default function Navbar({
 
   const theme = getThemeColors();
 
-  const handleLinkClick = (view: ViewState) => {
+  const handleLinkClick = (e: React.MouseEvent, view: ViewState) => {
+    e.preventDefault();
     onNavigate(view);
     setMobileOpen(false);
   };
 
   return (
-    <nav className={`fixed w-full z-50 transition-colors duration-500 py-2 md:py-3 ${theme.bg}`}>
+    <nav
+      className={`fixed w-full z-50 transition-colors duration-500 py-2 md:py-3 ${theme.bg}`}
+      aria-label="Navegación principal"
+    >
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-        <button
-          onClick={() => handleLinkClick('home')}
+        <Link
+          href="/"
+          onClick={e => handleLinkClick(e, 'home')}
           className="group flex items-center justify-center px-2 py-1 select-none"
-          aria-label="Volver al inicio"
+          title="Ir al inicio - La Jirafa Veggie"
         >
           <div className="relative flex items-center justify-center">
             <span
-              className={`
-                font-sans font-black 
-                text-5xl md:text-6xl 
-                tracking-[0.15em] 
-                leading-none
-                opacity-20
-                ${theme.text} 
-                transition-colors duration-500
-              `}
+              className={`font-sans font-black text-5xl md:text-6xl tracking-[0.15em] leading-none opacity-20 ${theme.text} transition-colors duration-500`}
             >
               VEGGIE
             </span>
 
             <div className="absolute inset-0 flex items-center justify-center z-10 -mt-1">
               <span
-                className={`
-                   font-marker 
-                   text-2xl md:text-3xl 
-                   transform -rotate-6 
-                   mr-1
-                   ${theme.text} 
-                   transition-colors duration-500
-                   drop-shadow-sm
-                 `}
+                className={`font-marker text-2xl md:text-3xl transform -rotate-6 mr-1 ${theme.text} transition-colors duration-500 drop-shadow-sm`}
               >
                 La
               </span>
@@ -85,7 +75,7 @@ export default function Navbar({
               <div className="w-9 h-9 md:w-11 md:h-11 shrink-0 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                 <Image
                   src={'/assets/logo.webp'}
-                  alt="Icono de la Jirafa"
+                  alt="Logo oficial de La Jirafa Veggie El Quisco - Comida Vegana y Saludable"
                   width={44}
                   height={44}
                   priority
@@ -93,47 +83,42 @@ export default function Navbar({
               </div>
 
               <span
-                className={`
-                   font-marker 
-                   text-2xl md:text-3xl 
-                   transform -rotate-2 
-                   ml-1
-                   ${theme.text} 
-                   transition-colors duration-500
-                   drop-shadow-sm
-                 `}
+                className={`font-marker text-2xl md:text-3xl transform -rotate-2 ml-1 ${theme.text} transition-colors duration-500 drop-shadow-sm`}
               >
                 Jirafa
               </span>
             </div>
           </div>
-        </button>
+        </Link>
 
         <div className="hidden md:flex gap-8 items-center">
-          <button
-            onClick={() => handleLinkClick('home')}
+          <Link
+            href="/"
+            onClick={e => handleLinkClick(e, 'home')}
             className={`font-medium transition-colors hover:opacity-70 ${theme.text} ${
               currentView === 'home' ? 'font-bold underline decoration-2 underline-offset-4' : ''
             }`}
           >
             Inicio
-          </button>
-          <button
-            onClick={() => handleLinkClick('veggie')}
+          </Link>
+          <Link
+            href="/?view=veggie"
+            onClick={e => handleLinkClick(e, 'veggie')}
             className={`font-medium transition-colors hover:opacity-70 ${theme.text} ${
               currentView === 'veggie' ? 'font-bold underline decoration-2 underline-offset-4' : ''
             }`}
           >
             Almuerzos
-          </button>
-          <button
-            onClick={() => handleLinkClick('sushi')}
+          </Link>
+          <Link
+            href="/?view=sushi"
+            onClick={e => handleLinkClick(e, 'sushi')}
             className={`font-medium transition-colors hover:opacity-70 ${theme.text} ${
               currentView === 'sushi' ? 'font-bold underline decoration-2 underline-offset-4' : ''
             }`}
           >
             Sushi
-          </button>
+          </Link>
           <a
             href="#contacto"
             className={`font-medium transition-colors hover:opacity-70 ${theme.text}`}
@@ -144,8 +129,9 @@ export default function Navbar({
           <a
             href={`https://wa.me/${CONTACT_INFO.phone.replace(/\D/g, '')}`}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className={`${theme.btn} text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-md transform hover:-translate-y-0.5`}
+            title="Hacer pedido por WhatsApp"
           >
             Pedir Ahora
           </a>
@@ -154,7 +140,8 @@ export default function Navbar({
         <button
           className={`md:hidden text-3xl transition-colors ${theme.text}`}
           onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Menu"
+          aria-expanded={mobileOpen}
+          aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú de navegación'}
         >
           {mobileOpen ? '✕' : '☰'}
         </button>
@@ -162,28 +149,31 @@ export default function Navbar({
 
       {mobileOpen && (
         <div className="absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-100 flex flex-col p-4 md:hidden">
-          <button
-            onClick={() => handleLinkClick('home')}
-            className={`py-4 text-center font-bold border-b border-gray-100 hover:bg-gray-50 ${theme.text}`}
+          <Link
+            href="/"
+            onClick={e => handleLinkClick(e, 'home')}
+            className={`py-4 text-center font-bold border-b border-gray-100 ${theme.text}`}
           >
             Inicio
-          </button>
-          <button
-            onClick={() => handleLinkClick('veggie')}
-            className={`py-4 text-center font-bold border-b border-gray-100 hover:bg-gray-50 ${theme.text}`}
+          </Link>
+          <Link
+            href="/?view=veggie"
+            onClick={e => handleLinkClick(e, 'veggie')}
+            className={`py-4 text-center font-bold border-b border-gray-100 ${theme.text}`}
           >
             Almuerzos
-          </button>
-          <button
-            onClick={() => handleLinkClick('sushi')}
-            className={`py-4 text-center font-bold border-b border-gray-100 hover:bg-gray-50 ${theme.text}`}
+          </Link>
+          <Link
+            href="/?view=sushi"
+            onClick={e => handleLinkClick(e, 'sushi')}
+            className={`py-4 text-center font-bold border-b border-gray-100 ${theme.text}`}
           >
             Sushi
-          </button>
+          </Link>
           <a
             href="#contacto"
             onClick={() => setMobileOpen(false)}
-            className={`py-4 text-center font-bold hover:bg-gray-50 ${theme.text}`}
+            className={`py-4 text-center font-bold ${theme.text}`}
           >
             Contacto
           </a>

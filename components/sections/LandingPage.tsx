@@ -9,6 +9,7 @@ import { WhatsappIcon } from '@/public/assets/icons';
 import { ViewState } from '@/types';
 import { useState, useRef, useEffect } from 'react';
 import { gsap } from '@/lib/gsap';
+import Image from 'next/image';
 
 export default function LandingPage() {
   const [currentView, setCurrentView] = useState<ViewState>('home');
@@ -57,7 +58,7 @@ export default function LandingPage() {
       .to(overlayRef.current, {
         y: '-100%',
         duration: 0.5,
-        delay: 0.1,
+        delay: 0.2,
         ease: 'power3.inOut',
       })
       .set(overlayRef.current, { y: '100%' });
@@ -76,18 +77,41 @@ export default function LandingPage() {
     >
       <div
         ref={overlayRef}
-        className={`fixed inset-0 z-100 ${transitionColor} flex items-center justify-center transform translate-y-full`}
+        className={`fixed inset-0 z-50 ${transitionColor} flex items-center justify-center transform translate-y-full`}
+        aria-hidden="true"
       >
-        <div className="text-white font-marker text-4xl animate-pulse">La Jirafa</div>
+        <div className="relative flex items-center justify-center scale-150 md:scale-[2.5] animate-pulse">
+          <span className="font-sans font-black text-6xl md:text-7xl tracking-[0.2em] leading-none opacity-20 text-white">
+            VEGGIE
+          </span>
+          <div className="absolute inset-0 flex items-center justify-center z-10 -mt-1">
+            <span className="font-marker text-3xl md:text-4xl transform -rotate-6 mr-2 text-white drop-shadow-lg">
+              La
+            </span>
+
+            <div className="w-16 h-16 md:w-20 md:h-20 shrink-0 transform rotate-3">
+              <Image
+                src={'/assets/logo.webp'}
+                alt=""
+                width={80}
+                height={80}
+                priority
+                className="drop-shadow-2xl"
+              />
+            </div>
+
+            <span className="font-marker text-3xl md:text-4xl transform -rotate-2 ml-2 text-white drop-shadow-lg">
+              Jirafa
+            </span>
+          </div>
+        </div>
       </div>
 
       <Navbar currentView={currentView} onNavigate={handleNavigate} />
 
       <main className="min-h-screen pt-20">
         {currentView === 'home' && <Hero onNavigate={handleNavigate} />}
-
         {currentView === 'veggie' && <DailyMenu />}
-
         {currentView === 'sushi' && <SushiMenu />}
       </main>
 
@@ -96,11 +120,12 @@ export default function LandingPage() {
       <a
         href="https://wa.me/56988412401"
         target="_blank"
-        rel="noreferrer"
-        className={`fixed bottom-6 right-6 z-50 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-all duration-300 group
+        rel="noopener noreferrer"
+        className={`fixed bottom-6 right-6 z-40 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-all duration-300 group
           ${currentView === 'sushi' ? 'bg-jirafa-red' : 'bg-green-500'}
         `}
-        aria-label="Contactar por WhatsApp"
+        aria-label="Contactar por WhatsApp para pedidos"
+        title="Enviar mensaje de WhatsApp"
       >
         <WhatsappIcon className="w-8 h-8 fill-current" />
       </a>

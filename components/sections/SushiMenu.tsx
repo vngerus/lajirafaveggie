@@ -65,7 +65,7 @@ export default function SushiMenu() {
   return (
     <section className="py-12 md:py-24 px-4 bg-white text-gray-800 min-h-[80vh] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size:16px_16px">
       <div className="max-w-6xl mx-auto">
-        <div ref={headerRef} className="text-center mb-12">
+        <header ref={headerRef} className="text-center mb-12">
           <div className="w-20 h-20 bg-jirafa-red rounded-full mx-auto flex items-center justify-center mb-4 shadow-xl ring-4 ring-red-50">
             <SushiLogoIcon className="w-12 h-12 fill-white" />
           </div>
@@ -77,9 +77,9 @@ export default function SushiMenu() {
             Fresh & Veggie
             <LeafIcon className="w-4 h-4 text-jirafa-green" />
           </p>
-        </div>
+        </header>
 
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        <nav className="flex flex-wrap justify-center gap-2 mb-12" aria-label="Categorías de sushi">
           {SUSHI_MENU.map(cat => {
             const isActive = activeTab === cat.id;
             return (
@@ -100,7 +100,7 @@ export default function SushiMenu() {
               </button>
             );
           })}
-        </div>
+        </nav>
 
         <div className="mb-10 w-full flex justify-center">
           {activeTab === 'handrolls' && (
@@ -160,15 +160,15 @@ export default function SushiMenu() {
 
         <div ref={contentRef} className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
           {activeCategory?.items.map((item: MenuItem, idx) => (
-            <div
+            <article
               key={idx}
               className="group relative bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-red-100 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
-                <div className="flex justify-between items-start mb-2">
-                  <h4 className="font-bold text-xl text-gray-800 group-hover:text-jirafa-red transition-colors w-[70%]">
+                <header className="flex justify-between items-start mb-2">
+                  <h3 className="font-bold text-xl text-gray-800 group-hover:text-jirafa-red transition-colors w-[70%]">
                     {item.name}
-                  </h4>
+                  </h3>
                   {item.price && (
                     <div className="flex items-center gap-1 bg-gray-50 px-3 py-1 rounded-full border border-gray-100 group-hover:bg-red-50 group-hover:text-jirafa-red group-hover:border-red-100 transition-colors">
                       <PriceTagIcon className="w-3 h-3 text-gray-400 group-hover:text-jirafa-red" />
@@ -177,12 +177,10 @@ export default function SushiMenu() {
                       </span>
                     </div>
                   )}
-                </div>
-
+                </header>
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">{item.description}</p>
               </div>
-
-              <div>
+              <footer>
                 {item.ingredients && (
                   <div className="flex flex-wrap gap-2 mt-2 pt-3 border-t border-gray-50">
                     {item.ingredients.map((ing, i) => (
@@ -195,44 +193,46 @@ export default function SushiMenu() {
                     ))}
                   </div>
                 )}
-
                 {item.note && (
                   <p className="text-xs text-orange-600 mt-2 font-medium bg-orange-50 inline-block px-2 py-1 rounded">
                     * {item.note}
                   </p>
                 )}
-              </div>
-
+              </footer>
               <div className="absolute top-0 right-0 w-16 h-16 bg-linear-to-br from-red-50 to-transparent rounded-bl-full rounded-tr-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-            </div>
+            </article>
           ))}
         </div>
 
         {activeCategory?.extraInfo && (
-          <div className="mt-12 bg-gray-900 text-white p-8 rounded-2xl shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gray-800 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-            <h5 className="relative z-10 font-bold text-jirafa-red mb-4 uppercase tracking-wider flex items-center gap-2">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
+          <aside className="mt-16 bg-jirafa-bg/30 p-8 rounded-3xl border-2 border-dashed border-jirafa-bg relative overflow-hidden">
+            <div
+              className="absolute -top-10 -right-10 w-40 h-40 bg-jirafa-red/5 rounded-full blur-3xl"
+              aria-hidden="true"
+            ></div>
+
+            <h4 className="relative z-10 font-marker text-2xl text-jirafa-red mb-6 flex items-center gap-3 tracking-wide">
+              <LeafIcon className="w-6 h-6" />
               Notas Importantes
-            </h5>
-            <ul className="relative z-10 text-sm space-y-3 text-gray-300">
+            </h4>
+
+            <ul className="relative z-10 space-y-4">
               {activeCategory.extraInfo.map((info, idx) => (
                 <li
                   key={idx}
-                  className="flex items-start bg-gray-800/50 p-3 rounded-lg border border-gray-700"
+                  className="flex items-start gap-4 text-jirafa-dark/90 text-sm md:text-base leading-relaxed group/item"
                 >
-                  <span className="text-jirafa-red mr-3 mt-0.5">►</span> {info}
+                  <span
+                    className="shrink-0 w-6 h-6 rounded-full bg-white border border-jirafa-red/20 flex items-center justify-center text-jirafa-red font-bold text-xs shadow-sm group-hover/item:bg-jirafa-red group-hover/item:text-white transition-colors"
+                    aria-hidden="true"
+                  >
+                    !
+                  </span>
+                  {info}
                 </li>
               ))}
             </ul>
-          </div>
+          </aside>
         )}
       </div>
     </section>

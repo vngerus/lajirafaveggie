@@ -20,8 +20,25 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'La Jirafa Veggie | Gastronomía Plant Based',
-  description: 'Menú semanal saludable y Sushi Bar vegano en El Quisco.',
+  title: 'La Jirafa Veggie | Gastronomía Plant Based en El Quisco',
+  description:
+    'Disfruta del mejor menú semanal saludable y Sushi Bar 100% vegano. Ubicados en José Narciso Aguirre 0249, El Quisco. ¡Haz tu pedido!',
+  keywords: ['Comida Vegana El Quisco', 'Sushi Vegano', 'Almuerzos Saludables', 'La Jirafa Veggie'],
+  openGraph: {
+    title: 'La Jirafa Veggie | Gastronomía Plant Based',
+    description: 'Almuerzos caseros y Sushi Bar vegano en el corazón de El Quisco.',
+    url: 'https://lajirafaveggie.cl',
+    siteName: 'La Jirafa Veggie',
+    images: [
+      {
+        url: '/assets/og-image.jpg',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'es_CL',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
